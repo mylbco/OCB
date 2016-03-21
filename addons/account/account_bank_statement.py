@@ -387,7 +387,8 @@ class account_bank_statement(osv.osv):
             # Explicitly unlink bank statement lines
             # so it will check that the related journal entries have
             # been deleted first
-            statement_line_obj.unlink(cr, uid, [line.id for line in item.line_ids], context=context)
+            if len(item.line_ids) > 0:
+                statement_line_obj.unlink(cr, uid, [line.id for line in item.line_ids], context=context)
         return super(account_bank_statement, self).unlink(cr, uid, ids, context=context)
 
     def button_journal_entries(self, cr, uid, ids, context=None):
